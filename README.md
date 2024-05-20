@@ -1,2 +1,22 @@
 # Portfolio
  
+- Elementen selecteren: <br>
+- Elementen manipuleren: <br>
+- Event aan een element koppelen: <br>
+- Formulier valideren: <br>
+- Gebruiken van een constante: <br>
+- Gebruiken van template literals: <br>
+- Destructuring: <br>
+- Spread & Rest operator: <br>
+- Iteration over een array: <br>
+- Arrow function: <br>
+- Callback function: <br>
+- Promise: <br>
+- Consumer methods: <br>
+- Async & Await: <br>
+- Self executing function: <br>
+- Fetch om data op te halen: <br>
+- JSON manipuleren en weergeven: <br>
+- Basis CSS Animatie: <br>
+- Gebruiken van een flexbox of CSS grid: <br>
+- Gebruik van LocalStorage: <br>
