@@ -40,7 +40,6 @@ function drawCard() {
 const movedColumns = new Map();
 
 // Function to move the corresponding ace up in the table
-// Function to move the corresponding ace up in the table
 function moveAce(symbol) {
   // Determine which ace corresponds to the drawn symbol
   let aceIndex;
@@ -89,7 +88,6 @@ function moveAce(symbol) {
   }
 }
 
-
 // Function to draw the four aces and add back the remaining cards
 function drawAces() {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=52`)
@@ -131,7 +129,6 @@ function drawAces() {
       console.error("Error drawing aces:", error);
     });
 }
-
 
 // Function to generate the 9x5 table and place card back images and aces
 function generateTable(aces) {

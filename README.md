@@ -3,8 +3,8 @@
 v Elementen selecteren: /main/js/index.js line: 27<br>
 v Elementen manipuleren: /main/js/index.js line: 36<br>
 v Event aan een element koppelen: /main/js/index.js line: 21<br>
-- Formulier valideren: Not implemented<br>
-- Gebruiken van een constante: Not implemented<br>
+v Formulier valideren: /main/js/login.js line: 21<br>
+v Gebruiken van een constante: /main/js/login.js<br>
 - Gebruiken van template literals: Not implemented<br>
 - Destructuring: Not implemented<br>
 - Spread & Rest operator: Not implemented<br>
@@ -24,3 +24,4 @@ v Gebruiken van een flexbox of CSS grid: /main/css/style.css<br>
 <h2>Bronnen:</h2>
 - https://chatgpt.com/share/3165a306-e976-44d2-9614-1f47414d1355<br>
 - https://chatgpt.com/share/2961b898-ab5e-459c-b559-44531d3d788d<br>
+- https://chatgpt.com/share/27bceb3b-1020-459c-a758-43a3fa8ad6f9<br>

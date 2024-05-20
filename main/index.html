@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Azenrace</title>
-      <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Azenrace</title>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-      <div class="container">
-          <div class="left-column">
-              <h3>Deck of Cards</h3>
-              <button onclick="drawCard()"><img src="../images/card back orange.png" alt="Deck of cards"></button>
-              <div id="card-container"></div>
 
-              <!-- 
-                aantal kaarten over: <span id="card-count">0</span>
-                aantal wins: <span id="win-count">0</span>
-                aantal losses: <span id="loss-count">0</span>
-                winstpercentage: <span id="win-percentage">0%</span>
-              -->
-          </div>
-          <div class="right-column">
-              <table id="card-table"></table>
-          </div>
+    <div class="login-popup">
+      <div class="form-container">
+        <h2>Login</h2>
+        <form id="login-form">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required>
+          <button class="login-button" type="submit">Login</button>
+        </form>
       </div>
-      <script src="js/index.js"></script>
+    </div>
+
+    <div class="container">
+      <div class="left-column">
+        <h3>Deck of Cards</h3>
+        <button onclick="drawCard()">
+          <img src="../images/card back orange.png" alt="Deck of cards" />
+        </button>
+        <div id="card-container"></div>
+        <!-- 
+          aantal kaarten over: <span id="card-count">0</span>
+          aantal wins: <span id="win-count">0</span>
+          aantal losses: <span id="loss-count">0</span>
+          winstpercentage: <span id="win-percentage">0%</span>
+            -->
+      </div>
+      <div class="right-column">
+        <table id="card-table"></table>
+      </div>
+    </div>
+    <script src="js/index.js"></script>
+    <script src="js/login.js"></script>
   </body>
 </html>
