@@ -35,7 +35,7 @@ table {
 }
 
 td {
-  border: 1px solid #000; /* for testing purpose*/
+  /*border: 1px solid #000; /* for testing purpose*/
   text-align: center;
   height: 105px;
 }

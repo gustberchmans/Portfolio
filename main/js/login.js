@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   const loginPopup = document.querySelector('.login-popup');
   const loginForm = document.getElementById('login-form');
 
@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   loginPopup.style.display = 'block';
 
   // Handle form submission
-  loginForm.addEventListener('submit', function(event) {
+  loginForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -23,17 +23,11 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // Here you can add your logic for handling the login credentials
-    console.log('Email:', email);
-    console.log('Password:', password);
-    // For demo purposes, let's just close the popup
     loginPopup.style.display = 'none';
   });
 
-  // Function to validate email
-  function isValidEmail(email) {
-    // Basic email validation
+  const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-  }
+  };
 });
