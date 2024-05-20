@@ -1,7 +1,26 @@
+@keyframes pullCard {
+  0% {
+    transform: translateX(-75px);
+  }
+  50% {
+    transform: translateX(-40px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.drawn-card {
+  animation: pullCard 0.9s ease forwards;
+}
+
 * {
-  background-color: antiquewhite;
   padding: 0;
   margin: 0;
+}
+
+body, html {
+  background-color: antiquewhite;
 }
 
 button {
@@ -11,6 +30,7 @@ button {
 img {
   width: auto;
   height: 100px;
+  transition: transform 0.5s ease; /* Add transition for smoother movement */
 }
 
 .container {
@@ -54,8 +74,8 @@ td {
   text-align: center;
 }
 
-.form-container {
-  background-color: white;
+.login-popup .form-container {
+  background-color: white !important;
   max-width: 300px;
   margin: 100px auto;
   padding: 20px;

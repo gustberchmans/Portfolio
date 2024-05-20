@@ -1,6 +1,3 @@
-// index.js
-let deckId;
-
 // Function to create a new deck and draw the four aces
 function createDeck() {
   fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
@@ -14,16 +11,23 @@ function createDeck() {
     });
 }
 
+
 // Function to draw a card from the deck
 function drawCard() {
-  fetch(
-    `https://deckofcardsapi.com/api/deck/${deckId}/pile/discard/draw/?count=1`
-  )
+  fetch(`https://deckofcardsapi.com/api/deck/${deckId}/pile/discard/draw/?count=1`)
     .then((response) => response.json())
     .then((data) => {
       const card = data.cards[0];
       const cardContainer = document.getElementById("card-container");
-      cardContainer.innerHTML = `<img src="${card.image}" alt="${card.value} of ${card.suit}">`;
+
+      // Create a new image element for the drawn card
+      const cardImage = document.createElement("img");
+      cardImage.src = card.image;
+      cardImage.alt = `${card.value} of ${card.suit}`;
+      cardImage.classList.add('drawn-card'); // Add class to style the drawn card
+
+      // Append the new card image next to the button
+      cardContainer.appendChild(cardImage);
 
       // Extract the symbol from the drawn card
       const symbol = card.suit;
@@ -31,13 +35,24 @@ function drawCard() {
 
       // Update the position of the corresponding ace
       moveAce(symbol);
+
+      // Keep only the last drawn card in the container
+      const images = cardContainer.querySelectorAll("img:not([alt='Deck of cards'])");
+      if (images.length > 1) {
+        cardContainer.removeChild(images[0]);
+      }
+
+      // Remove the class after the animation completes
+      setTimeout(() => {
+        cardImage.classList.remove('drawn-card');
+      }, 1000); // Adjust the timeout to match the animation duration
     })
     .catch((error) => {
       console.error("Error drawing card:", error);
     });
 }
 
-const movedColumns = new Map();
+
 
 // Function to move the corresponding ace up in the table
 function moveAce(symbol) {
@@ -56,15 +71,12 @@ function moveAce(symbol) {
     case "SPADES":
       aceIndex = 3;
       break;
-    // Add cases for other symbols if needed
     default:
       return; // If the symbol is not relevant for aces, exit the function
   }
 
   // Select the corresponding ace element and its parent cell
-  const aceImage = document.querySelector(
-    `#card-table img[data-value="ACE"][data-index="${aceIndex}"]`
-  );
+  const aceImage = document.querySelector(`#card-table img[data-value="ACE"][data-index="${aceIndex}"]`);
   const aceCell = aceImage.parentNode;
 
   if (aceCell) {
@@ -80,7 +92,18 @@ function moveAce(symbol) {
         // Delay showing the alert by 100 milliseconds
         setTimeout(() => {
           if (currentRow.rowIndex === 1) {
-            alert(`The suit ${symbol} won!`);
+            Swal.fire({
+              title: `The suit ${symbol} won!`,
+              text: "Do you want to play again?",
+              icon: "success",
+              showCancelButton: true,
+              confirmButtonText: "Play Again",
+              cancelButtonText: "Cancel"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                createDeck(); // Restart the game
+              }
+            });
           }
         }, 100);
       }
@@ -112,11 +135,7 @@ function drawAces() {
         .map((card) => card.code);
 
       // Add back the non-ace cards to the deck
-      fetch(
-        `https://deckofcardsapi.com/api/deck/${deckId}/pile/discard/add/?cards=${nonAceCodes.join(
-          ","
-        )}`
-      )
+      fetch(`https://deckofcardsapi.com/api/deck/${deckId}/pile/discard/add/?cards=${nonAceCodes.join(",")}`)
         .then((response) => response.json())
         .then((data) => {
           console.log("Non-ace cards added back to the deck:", data);

@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Azenrace</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   </head>
   <body>
 
@@ -24,10 +25,12 @@
     <div class="container">
       <div class="left-column">
         <h3>Deck of Cards</h3>
-        <button onclick="drawCard()">
-          <img src="../images/card back orange.png" alt="Deck of cards" />
-        </button>
-        <div id="card-container"></div>
+
+        <div id="card-container">
+          <button class="card-button" onclick="drawCard()">
+            <img src="../images/card back orange.png" alt="Deck of cards" />
+          </button>
+        </div>
         <!-- 
           aantal kaarten over: <span id="card-count">0</span>
           aantal wins: <span id="win-count">0</span>
