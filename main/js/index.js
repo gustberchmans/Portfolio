@@ -31,7 +31,6 @@ function drawCard() {
 
       // Extract the symbol from the drawn card
       const symbol = card.suit;
-      console.log("Drawn symbol:", symbol);
 
       // Update the position of the corresponding ace
       moveAce(symbol);
@@ -96,7 +95,7 @@ function moveAce(symbol) {
               title: `The suit ${symbol} won!`,
               text: "Do you want to play again?",
               icon: "success",
-              showCancelButton: true,
+              showCancelButton: false,
               confirmButtonText: "Play Again",
               cancelButtonText: "Cancel"
             }).then((result) => {
@@ -116,7 +115,6 @@ function drawAces() {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=52`)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data); // Check the data returned from the API
       const allCards = data.cards;
       const aces = allCards.filter((card) => card.value === "ACE");
 
@@ -127,7 +125,6 @@ function drawAces() {
         return 0;
       });
 
-      console.log(aces); // Check the sorted aces
       generateTable(aces);
 
       const nonAceCodes = allCards
@@ -137,9 +134,6 @@ function drawAces() {
       // Add back the non-ace cards to the deck
       fetch(`https://deckofcardsapi.com/api/deck/${deckId}/pile/discard/add/?cards=${nonAceCodes.join(",")}`)
         .then((response) => response.json())
-        .then((data) => {
-          console.log("Non-ace cards added back to the deck:", data);
-        })
         .catch((error) => {
           console.error("Error adding non-ace cards back to the deck:", error);
         });

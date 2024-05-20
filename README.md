@@ -5,7 +5,7 @@
 - [x] Event aan een element koppelen: /main/js/index.js line: 21<br>
 - [x] Formulier valideren: /main/js/login.js line: 21<br>
 - [x] Gebruiken van een constante: /main/js/login.js<br>
-- [ ] Gebruiken van template literals: Not implemented<br>
+- [x] Gebruiken van template literals: /main/js/index.js line: 17, 79, 96<br>
 - [ ] Destructuring: Not implemented<br>
 - [ ] Spread & Rest operator: Not implemented<br>
 - [ ] Iteration over een array: Not implemented<br>

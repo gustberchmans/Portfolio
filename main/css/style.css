@@ -38,12 +38,13 @@ img {
 }
 
 .left-column {
-  margin-left: 200px;
+  margin: auto;
+  margin-left: 400px;
   flex: 1;
 }
 
 .right-column {
-  margin-right: 200px;
+  margin-right: 400px;
   display: flex;
   flex: 1;
   justify-content: flex-end;
@@ -98,8 +99,7 @@ td {
   background-color: #0056b3;
 }
 
-label,
-input {
+label, input {
   display: block;
   width: calc(100% - 20px);
   margin: 0 auto 10px;
