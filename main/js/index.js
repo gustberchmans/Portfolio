@@ -40,6 +40,7 @@ function drawCard() {
 const movedColumns = new Map();
 
 // Function to move the corresponding ace up in the table
+// Function to move the corresponding ace up in the table
 function moveAce(symbol) {
   // Determine which ace corresponds to the drawn symbol
   let aceIndex;
@@ -61,10 +62,11 @@ function moveAce(symbol) {
       return; // If the symbol is not relevant for aces, exit the function
   }
 
-  // Select the corresponding ace element and update its position
-  const aceCell = document.querySelector(
+  // Select the corresponding ace element and its parent cell
+  const aceImage = document.querySelector(
     `#card-table img[data-value="ACE"][data-index="${aceIndex}"]`
-  ).parentNode;
+  );
+  const aceCell = aceImage.parentNode;
 
   if (aceCell) {
     const currentRow = aceCell.parentNode;
@@ -73,18 +75,19 @@ function moveAce(symbol) {
       const currentColumn = aceCell.cellIndex;
       const targetRow = previousRow.children[currentColumn];
       if (targetRow) {
-        // Move the ace cell to the target row and same column
-        targetRow.appendChild(aceCell);
+        // Move the ace image to the target row and same column
+        targetRow.appendChild(aceImage);
 
-        // Add an empty cell in the original row and column of the ace
-        const emptyCell = document.createElement("td");
-        currentRow.insertBefore(emptyCell, currentRow.children[currentColumn]);
+        // Delay showing the alert by 100 milliseconds
+        setTimeout(() => {
+          if (currentRow.rowIndex === 1) {
+            alert(`The suit ${symbol} won!`);
+          }
+        }, 100);
       }
     }
   }
 }
-
-
 
 
 // Function to draw the four aces and add back the remaining cards
@@ -95,11 +98,21 @@ function drawAces() {
       console.log(data); // Check the data returned from the API
       const allCards = data.cards;
       const aces = allCards.filter((card) => card.value === "ACE");
-      console.log(aces); // Check the filtered aces
+
+      // Sort the aces by their suit
+      aces.sort((a, b) => {
+        if (a.suit < b.suit) return -1;
+        if (a.suit > b.suit) return 1;
+        return 0;
+      });
+
+      console.log(aces); // Check the sorted aces
       generateTable(aces);
+
       const nonAceCodes = allCards
         .filter((card) => card.value !== "ACE")
         .map((card) => card.code);
+
       // Add back the non-ace cards to the deck
       fetch(
         `https://deckofcardsapi.com/api/deck/${deckId}/pile/discard/add/?cards=${nonAceCodes.join(
@@ -118,6 +131,7 @@ function drawAces() {
       console.error("Error drawing aces:", error);
     });
 }
+
 
 // Function to generate the 9x5 table and place card back images and aces
 function generateTable(aces) {
