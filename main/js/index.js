@@ -1,5 +1,6 @@
 // index.js
 let deckId;
+let movedColumns = new Map();
 
 // Function to create a new deck and draw the four aces
 function createDeck() {
@@ -22,11 +23,55 @@ function drawCard() {
           const card = data.cards[0];
           const cardContainer = document.getElementById('card-container');
           cardContainer.innerHTML = `<img src="${card.image}" alt="${card.value} of ${card.suit}">`;
+
+          // Extract the symbol from the drawn card
+          const symbol = card.suit;
+          console.log('Drawn symbol:', symbol);
+
+          // Update the position of the corresponding ace
+          moveAce(symbol);
       })
       .catch(error => {
           console.error('Error drawing card:', error);
       });
 }
+
+// Function to move the corresponding ace up in the table
+function moveAce(symbol) {
+  // Determine which ace corresponds to the drawn symbol
+  let aceIndex;
+  switch (symbol) {
+      case 'CLUBS':
+          aceIndex = 0;
+          break;
+      case 'DIAMONDS':
+          aceIndex = 1;
+          break;
+      case 'HEARTS':
+          aceIndex = 2;
+          break;
+      case 'SPADES':
+          aceIndex = 3;
+          break;
+      // Add cases for other symbols if needed
+      default:
+          return; // If the symbol is not relevant for aces, exit the function
+  }
+
+  // Select the corresponding ace element and update its position
+  const aceCell = document.querySelector(`#card-table img[data-value="ACE"][data-index="${aceIndex}"]`).parentNode;
+  if (aceCell) {
+      const currentRow = aceCell.parentNode;
+      const previousRow = currentRow.previousElementSibling;
+      if (previousRow) {
+          previousRow.appendChild(aceCell); // Move the ace cell to the previous row
+      }
+
+      // Store the moved column for later reference
+      movedColumns.set(symbol, true); // Use set method to add a key-value pair to the map
+  }
+}
+
 
 // Function to draw the four aces and add back the remaining cards
 function drawAces() {
@@ -63,13 +108,18 @@ function generateTable(aces) {
   for (let i = 0; i < 9; i++) {
     tableHTML += "<tr>";
     for (let j = 0; j < 5; j++) {
-      if (i === 8 && j < aces.length) {
-        // Place aces in the bottom row
-        const ace = aces[j];
-        if (ace) {
-          tableHTML += `<td><img src="${ace.image}" alt="${ace.value} of ${ace.suit}"></td>`;
+      if (i === 8) {
+        if (j < aces.length) {
+          // Place aces in the bottom row
+          const ace = aces[j];
+          if (ace) {
+            // Add data attributes to identify the ace
+            tableHTML += `<td><img src="${ace.image}" alt="${ace.value} of ${ace.suit}" data-value="${ace.value}" data-index="${j}"></td>`;
+          } else {
+            tableHTML += "<td></td>"; // If there are less than 4 aces
+          }
         } else {
-          tableHTML += "<td></td>"; // If there are less than 4 aces
+          tableHTML += "<td></td>"; // For empty cells in the bottom row
         }
       } else if (j === 4 && i >= 1 && i < 8) {
         // Place card backs in the last column starting from the second row
@@ -83,6 +133,7 @@ function generateTable(aces) {
 
   cardTable.innerHTML = tableHTML;
 }
+
 
 // Initial setup
 createDeck();

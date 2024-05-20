@@ -18,10 +18,12 @@ img {
 }
 
 .left-column {
+  margin-left: 200px;
   flex: 1;
 }
 
 .right-column {
+  margin-right: 200px;
   display: flex;
   flex: 1;
   justify-content: flex-end;
