@@ -4,25 +4,23 @@ let wins = 0;
 let loses = 0;
 
 // Function to create a new deck and draw the four aces
-function createDeck() {
-  fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
-    .then((response) => response.json())
-    .then((data) => {
-      deckId = data.deck_id;
-      drawAces();
-    })
-    .catch((error) => {
-      console.error("Error creating deck:", error);
-    });
+const createDeck = async () => {
+  try {
+    const response = await fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
+    const data = await response.json();
+    deckId = data.deck_id;
+    drawAces();
+  } catch (error) {
+    console.error("Error creating deck:", error);
+  }
 }
 
 // Function to draw the four aces and add back the remaining cards
 function drawAces() {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=52`)
     .then((response) => response.json())
-    .then((data) => {
-      const allCards = data.cards;
-      const aces = allCards.filter((card) => card.value === "ACE");
+    .then(({ cards: allCards }) => {
+      const aces = allCards.filter(({ value }) => value === "ACE");
 
       // Sort the aces by their suit
       aces.sort((a, b) => {
@@ -34,8 +32,8 @@ function drawAces() {
       generateTable(aces);
 
       const nonAceCodes = allCards
-        .filter((card) => card.value !== "ACE")
-        .map((card) => card.code);
+        .filter(({ value }) => value !== "ACE")
+        .map(({ code }) => code);
 
       // Add back the non-ace cards to the deck
       fetch(`https://deckofcardsapi.com/api/deck/${deckId}/pile/discard/add/?cards=${nonAceCodes.join(",")}`)
@@ -113,7 +111,7 @@ function drawCard() {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/pile/discard/draw/?count=1`)
     .then((response) => response.json())
     .then((data) => {
-      const card = data.cards[0];
+      const [card] = data.cards;
       const cardContainer = document.getElementById("card-container");
 
       // Create a new image element for the drawn card
@@ -126,7 +124,7 @@ function drawCard() {
       cardContainer.appendChild(cardImage);
 
       // Extract the symbol from the drawn card
-      const symbol = card.suit;
+      const { suit: symbol } = card;
 
       // Update the position of the corresponding ace
       moveAce(symbol);
@@ -185,6 +183,8 @@ function moveAce(symbol) {
         // Delay showing the alert by 100 milliseconds
         setTimeout(() => {
           if (currentRow.rowIndex === 1) {
+            selectedAceIndex = null;
+            drawingStarted = false;
             // Check if the selected ace's suit matches the suit of the last drawn card
             const selectedAceSuit = localStorage.getItem('selectedAceSuit');
             const lastDrawnCardSuit = symbol;
@@ -198,7 +198,7 @@ function moveAce(symbol) {
 
             const totalGames = wins + loses;
             if (totalGames != 0) {
-              winPercentage = wins/totalGames;
+              winPercentage = wins/totalGames * 100;
             }
             document.getElementById("win-percentage").textContent = winPercentage;
 
@@ -221,6 +221,7 @@ function moveAce(symbol) {
   }
 }
 
-
 // Initial setup
-createDeck();
+(function() {
+  createDeck();
+})();
