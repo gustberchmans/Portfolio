@@ -10,14 +10,14 @@ const createDeck = async () => {
     const response = await fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
     const data = await response.json();
     deckId = data.deck_id;
-    drawAces();
+    drawAces(addNonAcesBack); // Pass the callback function
   } catch (error) {
     console.error("Error creating deck:", error);
   }
 }
 
-// Function to draw the four aces and add back the remaining cards
-function drawAces() {
+// Function to draw the four aces and execute a callback after completion
+function drawAces(callback) {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=52`)
     .then((response) => response.json())
     .then(({ cards: allCards }) => {
@@ -36,17 +36,23 @@ function drawAces() {
         .filter(({ value }) => value !== "ACE")
         .map(({ code }) => code);
 
-      // Add back the non-ace cards to the deck
-      fetch(`https://deckofcardsapi.com/api/deck/${deckId}/pile/discard/add/?cards=${nonAceCodes.join(",")}`)
-        .then((response) => response.json())
-        .catch((error) => {
-          console.error("Error adding non-ace cards back to the deck:", error);
-        });
+      // Execute the callback function to add back non-ace cards
+      callback(nonAceCodes);
     })
     .catch((error) => {
       console.error("Error drawing aces:", error);
     });
 }
+
+// Function to add back the non-ace cards to the deck
+function addNonAcesBack(nonAceCodes) {
+  fetch(`https://deckofcardsapi.com/api/deck/${deckId}/pile/discard/add/?cards=${nonAceCodes.join(",")}`)
+    .then((response) => response.json())
+    .catch((error) => {
+      console.error("Error adding non-ace cards back to the deck:", error);
+    });
+}
+
 
 // Function to generate the 9x5 table and place card back images and aces
 function generateTable(aces) {
