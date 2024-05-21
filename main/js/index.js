@@ -1,5 +1,7 @@
 let selectedAceIndex = null;
 let drawingStarted = false;
+let wins = 0;
+let loses = 0;
 
 // Function to create a new deck and draw the four aces
 function createDeck() {
@@ -183,6 +185,23 @@ function moveAce(symbol) {
         // Delay showing the alert by 100 milliseconds
         setTimeout(() => {
           if (currentRow.rowIndex === 1) {
+            // Check if the selected ace's suit matches the suit of the last drawn card
+            const selectedAceSuit = localStorage.getItem('selectedAceSuit');
+            const lastDrawnCardSuit = symbol;
+            if (selectedAceSuit === lastDrawnCardSuit) {
+              wins++;
+              document.getElementById("wins-display").textContent = wins;
+            } else {
+              loses++;
+              document.getElementById("loss-count").textContent = loses;
+            }
+
+            const totalGames = wins + loses;
+            if (totalGames != 0) {
+              winPercentage = wins/totalGames;
+            }
+            document.getElementById("win-percentage").textContent = winPercentage;
+
             Swal.fire({
               title: `The suit ${symbol} won!`,
               text: "Do you want to play again?",
@@ -201,6 +220,7 @@ function moveAce(symbol) {
     }
   }
 }
+
 
 // Initial setup
 createDeck();

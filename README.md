@@ -19,7 +19,7 @@
 - [x] JSON manipuleren en weergeven: /main/js/index.js line: 41, 56<br>
 - [x] Basis CSS Animatie: /main/css/style.css<br>
 - [x] Gebruiken van een flexbox of CSS grid: /main/css/style.css<br>
-- [ ] Gebruik van LocalStorage: Not implemented<br>
+- [x] Gebruik van LocalStorage: /main/js/index.js line: 100<br>
 <br>
 <h2>Bronnen & Hulpmiddelen:</h2>
 - Github Copilot
