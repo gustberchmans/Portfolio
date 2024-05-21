@@ -109,7 +109,13 @@ function selectAce(index, suit) {
 // Function to draw a card from the deck
 function drawCard() {
   if (selectedAceIndex === null) {
-    alert("Please select an ace before drawing cards.");
+    Swal.fire({
+      title: `Please select an ace first!`,
+      icon: "warning",
+      showCancelButton: false,
+      confirmButtonText: "Continue",
+      cancelButtonText: "Cancel"
+    });
     return;
   }
 
@@ -215,7 +221,7 @@ function moveAce(symbol) {
 
             localStorage.removeItem('selectedAceSuit');
             
-            showSwal(symbol);
+            showSwal(symbol, selectedAceSuit);
           }
           setTimeout(() => {targetRow.appendChild(aceImage);}, 650); // Adjust timing as needed
         }, 100);
@@ -224,23 +230,38 @@ function moveAce(symbol) {
   }
 }
 
-
-function showSwal(symbol) {
+function showSwal(symbol, aceSuit) {
   swalOpen = true;
 
-  Swal.fire({
-    title: `The suit ${symbol} won!`,
-    text: "Do you want to play again?",
-    icon: "success",
-    showCancelButton: false,
-    confirmButtonText: "Play Again",
-    cancelButtonText: "Cancel"
-  }).then((result) => {
-    swalOpen = false; // Reset the flag when SweetAlert is closed
-    if (result.isConfirmed) {
-      createDeck(); // Restart the game
-    }
-  });
+  if (symbol === aceSuit) {
+    Swal.fire({
+      title: `The suit ${symbol} won!`,
+      text: "Do you want to play again?",
+      icon: "success",
+      showCancelButton: false,
+      confirmButtonText: "Play Again",
+      cancelButtonText: "Cancel"
+    }).then((result) => {
+      swalOpen = false; // Reset the flag when SweetAlert is closed
+      if (result.isConfirmed) {
+        createDeck(); // Restart the game
+      }
+    });
+  } else {
+    Swal.fire({
+      title: `The suit ${symbol} won!`,
+      text: "Do you want to play again?",
+      icon: "error",
+      showCancelButton: false,
+      confirmButtonText: "Play Again",
+      cancelButtonText: "Cancel"
+    }).then((result) => {
+      swalOpen = false; // Reset the flag when SweetAlert is closed
+      if (result.isConfirmed) {
+        createDeck(); // Restart the game
+      }
+    });
+  }
 }
 
 // Initial setup

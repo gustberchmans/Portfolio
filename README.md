@@ -36,4 +36,6 @@
   - https://www.w3schools.com/jsref/prop_win_localstorage.asp
   - https://chatgpt.com/share/ea2f8c66-115c-414f-b763-dbd17305e7c9
   - https://www.w3schools.com/js/js_callback.asp
+  - https://sweetalert.js.org/guides/
+  - https://codepen.io/collection/XeBzGb/
 </div>
