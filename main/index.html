@@ -25,6 +25,7 @@
     <div class="container">
       <div class="left-column">
         <h3>Deck of Cards</h3>
+        <br>
 
         <div id="card-container">
           <button class="card-button" onclick="drawCard()">
@@ -33,11 +34,17 @@
         </div>
 
         <div>
-          aantal wins: <span id="wins-display">0</span>
           <br>
-          aantal losses: <span id="loss-count">0</span>
+          <h3>Game</h3>
+          Suit picked: <span id="card-picked">/</span>
           <br>
-          winstpercentage: <span id="win-percentage">0</span>%
+          <br>
+          <h3>Stats</h3>
+          Total wins: <span id="wins-display">0</span>
+          <br>
+          Total losses: <span id="loss-count">0</span>
+          <br>
+          Winrate: <span id="win-percentage">0</span>%
         </div>
         <!-- 
           aantal kaarten over: <span id="card-count">0</span>

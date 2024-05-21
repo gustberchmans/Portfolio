@@ -32,4 +32,8 @@
   - https://chatgpt.com/share/27bceb3b-1020-459c-a758-43a3fa8ad6f9
   - https://chatgpt.com/share/ff6d15b7-3de1-4a01-a4bb-0d673abe397d
   - https://www.w3schools.com/js/js_arrow_function.asp
+  - https://chatgpt.com/share/29bdcc6e-5002-407b-b6fa-222caf9277ff
+  - https://www.w3schools.com/jsref/prop_win_localstorage.asp
+  - https://chatgpt.com/share/ea2f8c66-115c-414f-b763-dbd17305e7c9
+  - https://www.w3schools.com/js/js_callback.asp
 </div>

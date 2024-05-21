@@ -2,6 +2,7 @@ let selectedAceIndex = null;
 let drawingStarted = false;
 let wins = 0;
 let loses = 0;
+let swalOpen = false;
 
 // Function to create a new deck and draw the four aces
 const createDeck = async () => {
@@ -96,7 +97,7 @@ function selectAce(index, suit) {
 
   // Save the selected suit in local storage
   localStorage.setItem('selectedAceSuit', suit);
-  console.log(`Selected Ace: ${aceImage.alt}`);
+  document.getElementById("card-picked").textContent = `${suit}`;
 }
 
 // Function to draw a card from the deck
@@ -145,8 +146,14 @@ function drawCard() {
     });
 }
 
+const calculateWinPercentage = () => {
+  const totalGames = wins + loses;
+  return totalGames !== 0 ? (wins / totalGames * 100).toFixed(2) : 0;
+};
+
 // Function to move the corresponding ace up in the table
 function moveAce(symbol) {
+  if (swalOpen) return;
   // Determine which ace corresponds to the drawn symbol
   let aceIndex;
   switch (symbol) {
@@ -177,8 +184,8 @@ function moveAce(symbol) {
       const currentColumn = aceCell.cellIndex;
       const targetRow = previousRow.children[currentColumn];
       if (targetRow) {
-        // Move the ace image to the target row and same column
-        targetRow.appendChild(aceImage);
+        // Keep a reference to the current position
+        const startPosition = aceImage.getBoundingClientRect();
 
         // Delay showing the alert by 100 milliseconds
         setTimeout(() => {
@@ -196,29 +203,38 @@ function moveAce(symbol) {
               document.getElementById("loss-count").textContent = loses;
             }
 
-            const totalGames = wins + loses;
-            if (totalGames != 0) {
-              winPercentage = wins/totalGames * 100;
-            }
-            document.getElementById("win-percentage").textContent = winPercentage;
+            const winPercentage = calculateWinPercentage();
 
-            Swal.fire({
-              title: `The suit ${symbol} won!`,
-              text: "Do you want to play again?",
-              icon: "success",
-              showCancelButton: false,
-              confirmButtonText: "Play Again",
-              cancelButtonText: "Cancel"
-            }).then((result) => {
-              if (result.isConfirmed) {
-                createDeck(); // Restart the game
-              }
-            });
+            document.getElementById("win-percentage").textContent = winPercentage;  
+
+            localStorage.removeItem('selectedAceSuit');
+            
+            showSwal(symbol);
           }
+          setTimeout(() => {targetRow.appendChild(aceImage);}, 650); // Adjust timing as needed
         }, 100);
       }
     }
   }
+}
+
+
+function showSwal(symbol) {
+  swalOpen = true;
+
+  Swal.fire({
+    title: `The suit ${symbol} won!`,
+    text: "Do you want to play again?",
+    icon: "success",
+    showCancelButton: false,
+    confirmButtonText: "Play Again",
+    cancelButtonText: "Cancel"
+  }).then((result) => {
+    swalOpen = false; // Reset the flag when SweetAlert is closed
+    if (result.isConfirmed) {
+      createDeck(); // Restart the game
+    }
+  });
 }
 
 // Initial setup
