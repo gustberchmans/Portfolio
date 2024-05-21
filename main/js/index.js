@@ -3,20 +3,19 @@ let drawingStarted = false;
 let wins = 0;
 let loses = 0;
 let swalOpen = false;
+let deckId;
 
-// Function to create a new deck and draw the four aces
 const createDeck = async () => {
   try {
     const response = await fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
-    const data = await response.json();
-    deckId = data.deck_id;
+    const { deck_id } = await response.json();
+    deckId = deck_id;
     drawAces(addNonAcesBack); // Pass the callback function
   } catch (error) {
     console.error("Error creating deck:", error);
   }
 }
 
-// Function to draw the four aces and execute a callback after completion
 function drawAces(callback) {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=52`)
     .then((response) => response.json())
@@ -37,15 +36,14 @@ function drawAces(callback) {
         .map(({ code }) => code);
 
       // Execute the callback function to add back non-ace cards
-      callback(nonAceCodes);
+      callback(...nonAceCodes);
     })
     .catch((error) => {
       console.error("Error drawing aces:", error);
     });
 }
 
-// Function to add back the non-ace cards to the deck
-function addNonAcesBack(nonAceCodes) {
+function addNonAcesBack(...nonAceCodes) {
   fetch(`https://deckofcardsapi.com/api/deck/${deckId}/pile/discard/add/?cards=${nonAceCodes.join(",")}`)
     .then((response) => response.json())
     .catch((error) => {
@@ -53,8 +51,6 @@ function addNonAcesBack(nonAceCodes) {
     });
 }
 
-
-// Function to generate the 9x5 table and place card back images and aces
 function generateTable(aces) {
   const cardTable = document.getElementById("card-table");
   const cardBackSrc = "../images/card back orange.png";
@@ -106,7 +102,6 @@ function selectAce(index, suit) {
   document.getElementById("card-picked").textContent = `${suit}`;
 }
 
-// Function to draw a card from the deck
 function drawCard() {
   if (selectedAceIndex === null) {
     Swal.fire({
@@ -163,7 +158,6 @@ const calculateWinPercentage = () => {
   return totalGames !== 0 ? (wins / totalGames * 100).toFixed(2) : 0;
 };
 
-// Function to move the corresponding ace up in the table
 function moveAce(symbol) {
   if (swalOpen) return;
   // Determine which ace corresponds to the drawn symbol

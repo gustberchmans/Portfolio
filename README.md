@@ -8,11 +8,11 @@
   - [x] Formulier valideren: /main/js/login.js line: 21
   - [x] Gebruiken van een constante: /main/js/login.js
   - [x] Gebruiken van template literals: /main/js/index.js line: 17, 79, 96
-  - [ ] Destructuring: Not implemented
-  - [ ] Spread & Rest operator: Not implemented
-  - [ ] Iteration over een array: Not implemented
+  - [x] Destructuring: /main/js/index.js line: 11
+  - [x] Spread & Rest operator: /main/js/index.js line: 39, 46
+  - [x] Iteration over een array: /main/js/index.js line: 23
   - [x] Arrow function: /main/js/login.js line: 7
-  - [ ] Callback function: Not implemented
+  - [x] Callback function: /main/js/index.js line: 40
   - [x] Promise: /main/js/index.js line: 28, 47, 62
   - [x] Consumer methods: /main/js/index.js line: 28, 47, 62
   - [x] Async & Await: /main/js/index.js line: 7
@@ -38,4 +38,6 @@
   - https://www.w3schools.com/js/js_callback.asp
   - https://sweetalert.js.org/guides/
   - https://codepen.io/collection/XeBzGb/
+  - https://chatgpt.com/share/5cf3cfc0-8de6-47ca-9bae-6bd54af38bb4
+  - https://www.geeksforgeeks.org/iterate-over-array-javascript/
 </div>
