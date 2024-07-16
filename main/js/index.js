@@ -214,6 +214,7 @@ function moveAce(symbol) {
             document.getElementById("win-percentage").textContent = winPercentage;  
 
             localStorage.removeItem('selectedAceSuit');
+            document.getElementById("card-picked").textContent = `/`;
             
             showSwal(symbol, selectedAceSuit);
           }
